@@ -1,18 +1,25 @@
-import { useContext } from 'react';
+import { useContext} from 'react';
 import CartContext from '../../store/cart-context';
 import Modal from '../Shared/Modal';
 import classes from './Cart.module.css';
 import CartItem from './CartItem';
 
 const Cart = props => {
+   
     const cartCtx = useContext(CartContext);
     const hasItems = cartCtx.items.length > 0;
-    console.log("cartCtx : ", cartCtx);
     const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
     const onAddItemHandler = item => {
-        console.log("item : ",item);
-        cartCtx.addItem(item);
-        
+        console.log("amount : ",item.amount);
+        if(item.amount === 5){
+            return;
+        }
+        const updateItem = {
+            ...item,
+            amount: item.amount + 1
+        }
+        //console.log("updateItem : ",updateItem);
+        cartCtx.addItem(updateItem);
     } 
     const onRemoveItemHandler = id => {
         cartCtx.removeItem(id);
@@ -28,6 +35,7 @@ const Cart = props => {
                     onAddItem={onAddItemHandler.bind(null,item)}
                     onRemoveItem={onRemoveItemHandler.bind(null,item.id)} />
             ))
+
         }
     </ul>
     return (
