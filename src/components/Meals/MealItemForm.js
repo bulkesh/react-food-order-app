@@ -4,7 +4,6 @@ import classes from './MealItemForm.module.css';
 
 const MealItemForm = props => {
     const [isFormValid, setISFormValid] = useState(true);
-
     const amountInputRef = useRef();
     const submitHandler = (e) => {
         e.preventDefault();
@@ -15,12 +14,14 @@ const MealItemForm = props => {
         }
         setISFormValid(true);
         props.onAddToCart(+enteredAmount);
+       
     }
     return (
         <form className={classes.form} onSubmit={submitHandler}>
             <Input
                 ref={amountInputRef}
                 label="Amount"
+                value={amountInputRef.current?.value}
                 input={{
                     id: 'amount_' + props.id,
                     type: 'number',
@@ -32,7 +33,7 @@ const MealItemForm = props => {
 
             />
             <button>+ Add</button>
-            {!isFormValid && <p>Please enter a valid amout (1-5).</p>}
+            {!isFormValid && <p>Please enter a valid amount (1-5).</p>}
         </form>
     )
 }
